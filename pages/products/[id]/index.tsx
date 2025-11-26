@@ -13,13 +13,14 @@ type Product = {
   image: string;
 };
 
-// API raw product structure
+// API raw product structure from DummyJSON
 type ApiProduct = {
   id: number;
   title: string;
   description: string;
   price: number;
-  image: string;
+  thumbnail: string;
+  images: string[];
 };
 
 export default function ProductDetail({ product }: { product: Product }) {
@@ -114,16 +115,16 @@ export default function ProductDetail({ product }: { product: Product }) {
 
 export async function getStaticPaths() {
   try {
-    const res = await fetch("https://fakestoreapi.com/products");
+    const res = await fetch("https://dummyjson.com/products?limit=100");
 
     if (!res.ok) {
       console.error("Failed to fetch products list", res.status);
       return { paths: [], fallback: false };
     }
 
-    const data: ApiProduct[] = await res.json();
+    const data: { products: ApiProduct[] } = await res.json();
 
-    const paths = data.map((product) => ({
+    const paths = data.products.map((product) => ({
       params: { id: product.id.toString() },
     }));
 
@@ -133,7 +134,7 @@ export async function getStaticPaths() {
     };
   } catch (error) {
     console.error("Error in getStaticPaths:", error);
-    // If API fails or returns HTML, avoid crashing build
+    // If API fails, avoid crashing build
     return {
       paths: [],
       fallback: false,
@@ -147,9 +148,7 @@ export async function getStaticProps({
   params: { id: string };
 }) {
   try {
-    const res = await fetch(
-      `https://fakestoreapi.com/products/${params.id}`
-    );
+    const res = await fetch(`https://dummyjson.com/products/${params.id}`);
 
     if (!res.ok) {
       console.error("Failed to fetch product", params.id, res.status);
@@ -164,15 +163,14 @@ export async function getStaticProps({
           id: product.id,
           name: product.title,
           description: product.description,
-          price: `$${product.price}`,
-          image: product.image,
+          price: `$${product.price.toFixed(2)}`,
+          image: product.thumbnail ?? product.images?.[0] ?? "",
         },
       },
       revalidate: 60,
     };
   } catch (error) {
     console.error("Error in getStaticProps:", error);
-    // If parsing fails (HTML instead of JSON), mark page as not found
     return {
       notFound: true,
     };

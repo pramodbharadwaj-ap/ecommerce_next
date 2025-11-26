@@ -5,7 +5,7 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import useCartStore from "../../stores/cartStore";
-import useWishlistStore from "../../stores/wishlistStore"; // Add this import
+import useWishlistStore from "../../stores/wishlistStore";
 
 // === Type Definitions ===
 type Product = {
@@ -18,14 +18,17 @@ type Product = {
   rating?: { rate: number; count: number };
 };
 
+// Raw product type from DummyJSON
 type RawProduct = {
   id: number;
   title: string;
   description: string;
   price: number;
-  image: string;
+  thumbnail: string;
+  images: string[];
   category: string;
-  rating: { rate: number; count: number };
+  rating: number; // DummyJSON uses a single rating number
+  stock: number;  // We'll treat stock as "count"
 };
 
 // === Component ===
@@ -124,9 +127,7 @@ export default function Products({ products = [] }: { products: Product[] }) {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path
-                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 1.01 4.5 2.09C13.09 4.01 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                />
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 1.01 4.5 2.09C13.09 4.01 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </button>
             <Link
@@ -248,19 +249,22 @@ export default function Products({ products = [] }: { products: Product[] }) {
 // === Data Fetching ===
 export async function getStaticProps() {
   try {
-    const res = await fetch("https://fakestoreapi.com/products");
-    if (!res.ok) throw new Error("Failed to fetch products");
+    const res = await fetch("https://dummyjson.com/products?limit=100");
+    if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
 
-    const data: RawProduct[] = await res.json();
+    const data: { products: RawProduct[] } = await res.json();
 
-    const products: Product[] = data.map((product) => ({
+    const products: Product[] = data.products.map((product) => ({
       id: product.id,
       name: product.title,
       description: product.description,
       price: `$${product.price.toFixed(2)}`,
-      image: product.image,
+      image: product.thumbnail ?? product.images?.[0] ?? "",
       category: product.category,
-      rating: product.rating,
+      rating: {
+        rate: product.rating,   // map dummyjson rating -> rate
+        count: product.stock,   // map stock -> count
+      },
     }));
 
     return {
