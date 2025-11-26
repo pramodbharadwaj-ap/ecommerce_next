@@ -14,9 +14,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.dummyjson.com", // ✅ Added for DummyJSON images
+        hostname: "cdn.dummyjson.com",
       },
     ],
+    // ✅ Explicit domains list so Next definitely allows it
+    domains: ["cdn.dummyjson.com"],
   },
 };
 

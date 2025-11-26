@@ -29,8 +29,8 @@ export default function Header({
   return (
     <header className="flex justify-between items-center mb-10">
       <Link href="/" className="flex items-center gap-3 cursor-pointer">
-        <Image src="/next.svg" alt="Shop logo" width={40} height={40} />
-        <span className="text-2xl font-bold">NextShop</span>
+        {/* <Image src="/next.svg" alt="Shop logo" width={40} height={40} /> */}
+        <span className="text-2xl font-bold">Pramod</span>
       </Link>
       <nav className="flex gap-6 items-center">
         <button
