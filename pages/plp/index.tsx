@@ -41,7 +41,7 @@ export default function Products({ products = [] }: { products: Product[] }) {
       css={css`
         min-height: 100vh;
         background: linear-gradient(120deg, #f0f4ff 0%, #f9fafb 100%);
-        padding: 2rem 2rem 3rem;
+        
       `}
     >
       <Header />
@@ -64,6 +64,7 @@ export default function Products({ products = [] }: { products: Product[] }) {
           display: grid;
           gap: 1.5rem;
           max-width: 1400px;
+          padding: 0 3.8rem;
           margin: 0 auto;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         `}

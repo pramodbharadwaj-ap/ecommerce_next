@@ -58,7 +58,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 dark:from-[#232329] dark:to-[#18181b] p-8 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 dark:from-[#232329] dark:to-[#18181b]">
       <Header />
       <main className="max-w-3xl mx-auto px-4 py-10">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-10 bg-white dark:bg-[#232329] p-8 rounded-2xl shadow-lg border border-blue-100 dark:border-[#232329]">

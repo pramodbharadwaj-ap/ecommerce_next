@@ -8,7 +8,7 @@ export default function Wishlist() {
   const wishlist = useWishlistStore((state) => state.wishlistItems);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] p-4 sm:p-8 pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b]">
       <Header />
       <main className="mt-10">
         <h1 className="text-3xl font-bold mb-6 text-center">My Wishlist</h1>

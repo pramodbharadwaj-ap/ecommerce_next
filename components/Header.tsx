@@ -21,20 +21,19 @@ export default function Header({
   useHydrateWishlist();
   const { user } = useUser();
   const cartItems = useCartStore((state) => state.cartItems);
-  const wishlistItems = useWishlistStore((state) => state.wishlistItems); // ✅ always call hook
+  const wishlistItems = useWishlistStore((state) => state.wishlistItems);
   const cartCount = cartItems.length;
   const wishlistCount = wishlistItems.length;
   const router = useRouter();
 
   return (
-    <header className="flex justify-between items-center mb-10">
+    <header className="w-full sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-md flex justify-between items-center px-6 py-4">
       <Link href="/" className="flex items-center gap-3 cursor-pointer">
-        {/* <Image src="/next.svg" alt="Shop logo" width={40} height={40} /> */}
         <span className="text-2xl font-bold">Pramod</span>
       </Link>
       <nav className="flex gap-6 items-center">
         <button
-          className="hover:underline bg-transparent border-none p-0 m-0"
+          className="hover:underline bg-transparent border-none p-0 m-0 cursor-pointer"
           style={{ background: "none" }}
           onClick={() => {
             if (router.pathname !== "/") {
@@ -51,7 +50,6 @@ export default function Header({
           href="/wishlist"
           className="hover:underline flex items-center relative"
         >
-          {/* Wishlist icon SVG */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -76,7 +74,6 @@ export default function Header({
           href="/cart"
           className="hover:underline flex items-center relative"
         >
-          {/* Cart icon SVG */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"

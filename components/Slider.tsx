@@ -18,7 +18,7 @@ export default function Slider() {
   return (
     <div className="relative w-full h-[60vh] max-h-[720px] mb-10 overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-900">
       {/* Image fills the container (reduced height) */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full flex items-center justify-center bg-gray-900">
         <Image
           src={sliderImages[current]}
           alt={`Slider ${current + 1}`}

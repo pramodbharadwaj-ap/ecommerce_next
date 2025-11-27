@@ -35,12 +35,12 @@ export default function Home({ products = [] }: { products: Product[] }) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] p-4 sm:p-8 pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] ">
       <Header />
       <Slider />
 
       <main className="mt-10">
-        <div className="flex justify-between items-center mb-6 max-w-6xl mx-auto px-4">
+        <div className="flex justify-between items-center mb-6 max-w-6xl mx-auto">
           <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-100">
             Featured Products
           </h1>

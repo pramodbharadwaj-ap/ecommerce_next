@@ -15,7 +15,7 @@ export default function Cart() {
 
   // Always show the same header, regardless of login state
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b] p-8 pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#18181b]">
       <Header />
       <HeaderSpacer />
       {!isSignedIn ? (
