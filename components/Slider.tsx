@@ -2,11 +2,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 const sliderImages = [
-  "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1509057199576-632a47484ece?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80",
 ];
 
 export default function Slider() {
@@ -16,35 +16,43 @@ export default function Slider() {
   const prevSlide = () => setCurrent((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
   return (
-    <div className="relative w-full max-w-full mb-10 rounded-lg overflow-hidden shadow-lg">
-      <Image
-        src={sliderImages[current]}
-        alt={`Slider ${current + 1}`}
-        width={1920}
-        height={400}
-        className="w-full h-[300px] object-cover"
-        priority
-        unoptimized
-      />
+    <div className="relative w-full h-[60vh] max-h-[720px] mb-10 overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-900">
+      {/* Image fills the container (reduced height) */}
+      <div className="relative w-full h-full">
+        <Image
+          src={sliderImages[current]}
+          alt={`Slider ${current + 1}`}
+          fill
+          className="object-cover"
+          priority
+          unoptimized
+        />
+      </div>
+
+      {/* Prev / Next buttons - smaller */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 dark:bg-black/40 rounded-full p-3"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/40 rounded-full p-3 text-xl shadow-md hover:scale-105 transition"
         aria-label="Previous"
       >
         &#8592;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 dark:bg-black/40 rounded-full p-3"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-black/40 rounded-full p-3 text-xl shadow-md hover:scale-105 transition"
         aria-label="Next"
       >
         &#8594;
       </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+
+      {/* Indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
         {sliderImages.map((_, idx) => (
-          <span
+          <button
             key={idx}
-            className={`block w-3 h-3 rounded-full ${idx === current ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"}`}
+            onClick={() => setCurrent(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+            className={`w-3 h-3 rounded-full ${idx === current ? "bg-blue-600 scale-110" : "bg-gray-300 dark:bg-gray-600"} transition`}
           />
         ))}
       </div>
